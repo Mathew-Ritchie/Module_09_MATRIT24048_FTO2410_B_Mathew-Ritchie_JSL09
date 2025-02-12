@@ -18,6 +18,7 @@
 
 const body = document.querySelector("body");
 const imageAuthor = document.getElementById("imageAuthor");
+const cryptoHead = document.getElementById("crypto-head");
 
 fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=aeroplanes")
   .then((response) => response.json())
@@ -33,10 +34,17 @@ fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&que
   });
 
 fetch("https://api.coingecko.com/api/v3/coins/bitcoin")
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
+  .then((response) => {
+    if (!response.ok) {
+      throw Error("something went wrong");
+    }
+    return response.json();
   })
-  .catch((err) => {
-    console.log("something went wrong");
-  });
+  .then((data) => {
+    cryptoHead.innerHTML = `
+        <img src=${data.image.small} />
+        <span> ${data.name} </span>
+    
+    `;
+  })
+  .catch((err) => console.error(err));
