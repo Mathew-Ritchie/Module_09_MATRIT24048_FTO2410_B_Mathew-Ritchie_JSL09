@@ -19,6 +19,7 @@
 const body = document.querySelector("body");
 const imageAuthor = document.getElementById("imageAuthor");
 const cryptoHead = document.getElementById("crypto-head");
+const crypto = document.getElementById("crypto");
 
 fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=aeroplanes")
   .then((response) => response.json())
@@ -41,10 +42,24 @@ fetch("https://api.coingecko.com/api/v3/coins/bitcoin")
     return response.json();
   })
   .then((data) => {
+    console.log(data);
     cryptoHead.innerHTML = `
         <img src=${data.image.small} />
         <span> ${data.name} </span>
     
     `;
+    crypto.innerHTML += `
+    <p> 💵: R${data.market_data.current_price.zar}.00</p>
+    <p> 👍: R${data.market_data.high_24h.zar}.00</p>
+    <p> 👎: R${data.market_data.low_24h.zar}.00</p>
+    `;
   })
   .catch((err) => console.error(err));
+
+let now = new Date();
+let currentTime = now.toLocaleTimeString("en-US", {
+  hour: "2-digit",
+  minute: "2-digit",
+});
+
+console.log(`Current Time: ${currentTime}`);
