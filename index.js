@@ -22,10 +22,8 @@ const imageAuthor = document.getElementById("imageAuthor");
 fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=aeroplanes")
   .then((response) => response.json())
   .then((data) => {
-    console.log(data);
-    console.log(data.user.name);
+    //console.log(data);
+    //console.log(data.user.name);
     body.style.backgroundImage = `url(${data.urls.regular})`;
-    const authorsName = document.createElement("p");
-    authorsName.textContent = `${data.user.name}`;
-    imageAuthor.appendChild(authorsName);
+    imageAuthor.textContent = `${data.user.name}`;
   });
