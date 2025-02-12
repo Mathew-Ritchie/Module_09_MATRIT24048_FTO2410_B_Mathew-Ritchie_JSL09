@@ -22,8 +22,21 @@ const imageAuthor = document.getElementById("imageAuthor");
 fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=aeroplanes")
   .then((response) => response.json())
   .then((data) => {
-    //console.log(data);
+    //console.log(data.urls.regular);
     //console.log(data.user.name);
     body.style.backgroundImage = `url(${data.urls.regular})`;
     imageAuthor.textContent = `${data.user.name}`;
+  })
+
+  .catch((err) => {
+    body.style.backgroundImage = `url(https://images.unsplash.com/photo-1517933508318-acc52a49cc04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxNDI0NzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzkzNjU1OTd8&ixlib=rb-4.0.3&q=80&w=1080)`;
+  });
+
+fetch("https://api.coingecko.com/api/v3/coins/bitcoin")
+  .then((response) => response.json())
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log("something went wrong");
   });
