@@ -20,6 +20,8 @@ const body = document.querySelector("body");
 const imageAuthor = document.getElementById("imageAuthor");
 const cryptoHead = document.getElementById("crypto-head");
 const crypto = document.getElementById("crypto");
+const time = document.querySelector(".time");
+const weather = document.getElementById("weather");
 
 fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=aeroplanes")
   .then((response) => response.json())
@@ -56,10 +58,42 @@ fetch("https://api.coingecko.com/api/v3/coins/bitcoin")
   })
   .catch((err) => console.error(err));
 
-let now = new Date();
-let currentTime = now.toLocaleTimeString("en-US", {
-  hour: "2-digit",
-  minute: "2-digit",
+function displayTime() {
+  let now = new Date();
+  let currentTime = now.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  time.textContent = currentTime;
+  console.log(`Current Time: ${currentTime}`);
+}
+setInterval(displayTime, 1000);
+
+navigator.geolocation.getCurrentPosition((position) => {
+  console.log(position);
 });
 
-console.log(`Current Time: ${currentTime}`);
+navigator.geolocation.getCurrentPosition((position) => {
+  console.log(position);
+  latitude = position.coords.latitude;
+  longitude = position.coords.longitude;
+  fetch(
+    `https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw Error("Weather data not available");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const weatherImageUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
+      weather.innerHTML = `
+                <img src=${weatherImageUrl} />
+                <p>${Math.round(data.main.temp)}º</P>
+                <p>${data.name}</P>
+            `;
+      console.log(data);
+    })
+    .catch((err) => console.error(err));
+});
