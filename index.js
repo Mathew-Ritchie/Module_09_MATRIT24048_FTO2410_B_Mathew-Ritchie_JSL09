@@ -23,7 +23,7 @@ const crypto = document.getElementById("crypto");
 const time = document.querySelector(".time");
 const weather = document.getElementById("weather");
 
-fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=aeroplanes")
+fetch("https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=fighterjets")
   .then((response) => response.json())
   .then((data) => {
     //console.log(data.urls.regular);
