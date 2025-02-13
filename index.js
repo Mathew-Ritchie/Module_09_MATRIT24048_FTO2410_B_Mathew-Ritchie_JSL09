@@ -90,8 +90,8 @@ navigator.geolocation.getCurrentPosition((position) => {
       const weatherImageUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
       weather.innerHTML = `
                 <img src=${weatherImageUrl} />
-                <p>${Math.round(data.main.temp)}º</P>
-                <p>${data.name}</P>
+                <p class="weather-temp">${Math.round(data.main.temp)}º</P>
+                <p class="weather-city">${data.name}</P>
             `;
       console.log(data);
     })
