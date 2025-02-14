@@ -79,9 +79,3 @@ p.weather-temp {
   font-size: 2rem;
   margin-left: -10px;
 }
-
-.footer-div {
-  display: flex;
-  justify-content: space-between;
-  align-items: end;
-}

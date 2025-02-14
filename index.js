@@ -1,3 +1,4 @@
+//Dom elements stored here//
 const body = document.querySelector("body");
 const imageAuthor = document.getElementById("imageAuthor");
 const cryptoHead = document.getElementById("crypto-head");
@@ -5,9 +6,11 @@ const crypto = document.getElementById("crypto");
 const time = document.querySelector(".time");
 const weather = document.getElementById("weather");
 
+//Image API code, using await operator to make code asyncronous.
+//try statment is the code that should be run and the catch statment is what should be run if there is an error.
 try {
   const res = await fetch(
-    "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=fighterjets"
+    "https://apis.scrimba.com/unsplash/photos/random?orientation=landscape&query=aeroplanes"
   );
   const data = await res.json();
   //console.log(data.urls.regular);
@@ -18,6 +21,7 @@ try {
   body.style.backgroundImage = `url(https://images.unsplash.com/photo-1517933508318-acc52a49cc04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxNDI0NzB8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzkzNjU1OTd8&ixlib=rb-4.0.3&q=80&w=1080)`;
 }
 
+//Crypto API code. addition of a throw statelent give a custom error.
 try {
   const response = await fetch("https://api.coingecko.com/api/v3/coins/bitcoin");
   if (!response.ok) {
@@ -39,6 +43,7 @@ try {
   console.error(err);
 }
 
+//Time function to give time at local position.
 function displayTime() {
   let now = new Date();
   let currentTime = now.toLocaleTimeString("en-US", {
@@ -48,14 +53,13 @@ function displayTime() {
   time.textContent = currentTime;
   console.log(`Current Time: ${currentTime}`);
 }
+//setInterval method is used to update the time every 1000ms
 setInterval(displayTime, 1000);
 
-navigator.geolocation.getCurrentPosition((position) => {
-  console.log(position);
-});
-
+//.getCurrentPosition() is a method to get the current latitude and logitude of the device. async is used to make the code asyncronous and other code can run while we wait to get the information.
 navigator.geolocation.getCurrentPosition(async (position) => {
   //console.log(position);
+  //try statement to get the weather infomation from the api. lat and long coordinates are added.
   try {
     const resWeather = await fetch(
       `https://apis.scrimba.com/openweathermap/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric`
@@ -74,23 +78,3 @@ navigator.geolocation.getCurrentPosition(async (position) => {
     console.error(err);
   }
 });
-
-try {
-  const response = await fetch(
-    "https://api.polygon.io/v2/aggs/ticker/AAPL/prev?adjusted=true&apiKey=RstkhCbmoNYrJ4P4Eiz8yMFxaaW7lP2i"
-  );
-  if (!response.ok) {
-    throw Error("something went wrong");
-  }
-  const data = await response.json();
-  document.getElementById("StockDiv").innerHTML = `
-         <h1>Stocks</h1>
-         <h3>${data.ticker}</h3>
-         <p>Open: $${data.results[0].o.toFixed(2)}</p>
-         <p>High: $${data.results[0].h.toFixed(2)}</p>
-         <p>Clos: $${data.results[0].c.toFixed(2)}</p>
-          `;
-  //console.log(data);
-} catch (err) {
-  console.error(err);
-}
