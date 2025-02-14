@@ -74,3 +74,23 @@ navigator.geolocation.getCurrentPosition(async (position) => {
     console.error(err);
   }
 });
+
+try {
+  const response = await fetch(
+    "https://api.polygon.io/v2/aggs/ticker/AAPL/prev?adjusted=true&apiKey=RstkhCbmoNYrJ4P4Eiz8yMFxaaW7lP2i"
+  );
+  if (!response.ok) {
+    throw Error("something went wrong");
+  }
+  const data = await response.json();
+  document.getElementById("StockDiv").innerHTML = `
+         <h1>Stocks</h1>
+         <h3>${data.ticker}</h3>
+         <p>Open: $${data.results[0].o.toFixed(2)}</p>
+         <p>High: $${data.results[0].h.toFixed(2)}</p>
+         <p>Clos: $${data.results[0].c.toFixed(2)}</p>
+          `;
+  //console.log(data);
+} catch (err) {
+  console.error(err);
+}
